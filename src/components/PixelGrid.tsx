@@ -11,13 +11,13 @@ export const PixelGrid = ({ height, width }: PixelGridProps) => {
         <div 
             className="grid gap-0"
             style={{
-                gridTemplateColumns: `repeat(${width}, 10px)`,
-                gridTemplateRows: `repeat(${height}, 10px)`,
+                gridTemplateColumns: `repeat(${width}, auto)`,
+                gridTemplateRows: `repeat(${height}, auto)`,
             }}
         >
             {cells.map((_, i) => (
                 <div className="border border-foreground box-content">
-                    
+                    {i}
                 </div>
             ))}
         </div>
