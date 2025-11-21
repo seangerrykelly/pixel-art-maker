@@ -1,12 +1,15 @@
 import './App.css'
+import { ColorPicker } from '@/components/ColorPicker'
 import { EditGridModal } from '@/components/EditGridModal'
 import { PixelGrid } from '@/components/PixelGrid'
-import { useState, type FormEvent } from 'react'
+import { useState, type ChangeEvent, type FormEvent } from 'react'
+import { Controls } from './components/Controls'
 
 function App() {
 
   const [gridWidth, setGridWidth] = useState<number>(10)
   const [gridHeight, setGridHeight] = useState<number>(10)
+  const [currentColor, setCurrentColor] = useState<string>("#000000")
 
   const handleSubmitEditGrid = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -17,15 +20,27 @@ function App() {
     setGridWidth(newWidth)
   }
 
+  const handleChangeColor = (event: ChangeEvent<HTMLInputElement>) => {
+    console.log(event.target.value)
+    setCurrentColor(event.target.value)
+  }
+
   return (
     <div className="bg-background flex justify-center w-screen h-screen">
-      <div className="flex items-center">
-        <EditGridModal 
-          gridHeight={gridHeight} 
-          gridWidth={gridWidth} 
-          handleSubmit={handleSubmitEditGrid}
+      <div className="flex flex-col justify-center gap-4 items-center">
+        <Controls>
+          <ColorPicker handleChange={handleChangeColor} />
+          <EditGridModal 
+            gridHeight={gridHeight} 
+            gridWidth={gridWidth} 
+            handleSubmit={handleSubmitEditGrid}
+          />
+        </Controls>
+        <PixelGrid 
+          height={gridHeight} 
+          width={gridWidth} 
+          currentColor={currentColor} 
         />
-        <PixelGrid height={gridHeight} width={gridWidth} />
       </div>
     </div>
   )

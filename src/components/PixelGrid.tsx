@@ -1,9 +1,12 @@
+import { PixelGridCell } from "./PixelGridCell"
+
 type PixelGridProps = {
     height: number
     width: number
+    currentColor: string
 }
 
-export const PixelGrid = ({ height, width }: PixelGridProps) => {
+export const PixelGrid = ({ height, width, currentColor }: PixelGridProps) => {
     const cellCount = height * width
     const cells = Array.from({ length: cellCount }, (_, index) => index + 1)
 
@@ -11,14 +14,12 @@ export const PixelGrid = ({ height, width }: PixelGridProps) => {
         <div 
             className="grid gap-0"
             style={{
-                gridTemplateColumns: `repeat(${width}, auto)`,
-                gridTemplateRows: `repeat(${height}, auto)`,
+                gridTemplateColumns: `repeat(${width}, 1rem)`,
+                gridTemplateRows: `repeat(${height}, 1rem)`,
             }}
         >
-            {cells.map((_, i) => (
-                <div className="border border-foreground box-content">
-                    {i}
-                </div>
+            {cells.map((_) => (
+                <PixelGridCell currentColor={currentColor}/>
             ))}
         </div>
     )
