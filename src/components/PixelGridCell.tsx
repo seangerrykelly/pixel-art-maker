@@ -19,8 +19,9 @@ export const PixelGridCell = ({ currentColor, backgroundColor, currentTool, isMo
         }
     }, [backgroundColor])
 
-    const drawOnCell = () => {
-        if (!isMouseDown) {
+    // isInitialClick parameter needed because isMouseDown won't be updated fast enough on first click
+    const drawOnCell = (isInitialClick: boolean) => {
+        if (!isInitialClick && !isMouseDown) {
             // Don't do anything if user isn't clicking mouse
             return
         }
@@ -40,8 +41,8 @@ export const PixelGridCell = ({ currentColor, backgroundColor, currentTool, isMo
             style={{
                 background: cellColor
             }}
-            onMouseDown={drawOnCell}
-            onMouseEnter={drawOnCell}
+            onMouseDown={() => drawOnCell(true)}
+            onMouseEnter={() => drawOnCell(false)}
         >
                     
         </div>
