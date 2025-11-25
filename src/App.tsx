@@ -1,7 +1,7 @@
 import './App.css'
 import { useState, type ChangeEvent, type FormEvent } from 'react'
 
-import { ColorPicker } from '@/components/ColorPicker'
+import { ColorPicker, type ColorType } from '@/components/ColorPicker'
 import { Controls } from '@/components/Controls'
 import { DrawingTools, type DrawingTool } from '@/components/DrawingTools'
 import { EditGridModal } from '@/components/EditGridModal'
@@ -24,8 +24,13 @@ function App() {
     setGridWidth(newWidth)
   }
 
-  const handleChangeColor = (event: ChangeEvent<HTMLInputElement>) => {
-    setCurrentColor(event.target.value)
+  const handleChangeColor = (event: ChangeEvent<HTMLInputElement>, colorType: ColorType) => {
+    const selectedColor = event.target.value
+    if (colorType === 'Pencil') {
+      setCurrentColor(selectedColor)
+    } else if (colorType === 'Background') {
+      setBackgroundColor(selectedColor)
+    }
   }
 
   const handleChangeDrawingTool = (selectedTool: DrawingTool) => {
@@ -40,7 +45,8 @@ function App() {
             currentTool={currentTool} 
             handleChange={handleChangeDrawingTool}
           />
-          <ColorPicker handleChange={handleChangeColor} />
+          <ColorPicker handleChange={handleChangeColor} colorType="Pencil" />
+          <ColorPicker handleChange={handleChangeColor} colorType="Background" />
           <EditGridModal 
             gridHeight={gridHeight} 
             gridWidth={gridWidth} 

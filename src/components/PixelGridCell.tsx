@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import type { DrawingTool } from "@/components/DrawingTools"
 
 type PixelGridCellProps = {
@@ -10,12 +10,21 @@ type PixelGridCellProps = {
 export const PixelGridCell = ({ currentColor, backgroundColor, currentTool }: PixelGridCellProps) => {
 
     const [cellColor, setCellColor] = useState<string>(backgroundColor)
+    const [isFilled, setIsFilled] = useState<boolean>(false)
+
+    useEffect(() => {
+        if (!isFilled) {
+            setCellColor(backgroundColor)
+        }
+    }, [backgroundColor])
 
     const handleClickCell = () => {
         if (currentTool === 'PENCIL') {
             setCellColor(currentColor)
+            setIsFilled(true)
         } else if (currentTool === 'ERASER') {
             setCellColor(backgroundColor)
+            setIsFilled(false)
         }
     }
 
