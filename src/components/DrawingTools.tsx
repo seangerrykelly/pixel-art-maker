@@ -1,13 +1,32 @@
 import { Button } from "@/components/ui/button"
-import { Eraser, PencilIcon } from "lucide-react"
+import { Eraser, PencilIcon, type LucideIcon } from "lucide-react"
 
-type DrawingToolsProps = {}
+export type DrawingTool = 'PENCIL' | 'ERASER'
 
-export const DrawingTools = ({}: DrawingToolsProps) => {
+type DrawingToolsProps = {
+    currentTool: DrawingTool
+    handleChange: (e: DrawingTool) => void
+}
+
+const drawingTools: { toolName: DrawingTool; icon: LucideIcon }[] = [
+  { toolName: "PENCIL", icon: PencilIcon },
+  { toolName: "ERASER", icon: Eraser },
+]
+
+export const DrawingTools = ({ currentTool, handleChange }: DrawingToolsProps) => {
+
     return (
         <div className="flex flex-row gap-2">
-            <Button><PencilIcon /></Button>
-            <Button><Eraser /></Button>
+            {drawingTools.map((tool, index) => (
+                <Button 
+                    key={`drawing-tool-${index}`}
+                    size="icon-sm"
+                    variant={`${currentTool === tool.toolName ? 'default' : 'outline'}`}
+                    onClick={() => handleChange(tool.toolName)}
+                >
+                    <tool.icon />
+                </Button>
+            ))}
         </div>
     )
 }

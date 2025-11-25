@@ -3,7 +3,7 @@ import { useState, type ChangeEvent, type FormEvent } from 'react'
 
 import { ColorPicker } from '@/components/ColorPicker'
 import { Controls } from '@/components/Controls'
-import { DrawingTools } from '@/components/DrawingTools'
+import { DrawingTools, type DrawingTool } from '@/components/DrawingTools'
 import { EditGridModal } from '@/components/EditGridModal'
 import { PixelGrid } from '@/components/PixelGrid'
 
@@ -12,6 +12,8 @@ function App() {
   const [gridWidth, setGridWidth] = useState<number>(10)
   const [gridHeight, setGridHeight] = useState<number>(10)
   const [currentColor, setCurrentColor] = useState<string>("#000000")
+  const [backgroundColor, setBackgroundColor] = useState<string>("#FFFFFF")
+  const [currentTool, setCurrentTool] = useState<DrawingTool>('PENCIL')
 
   const handleSubmitEditGrid = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -23,15 +25,21 @@ function App() {
   }
 
   const handleChangeColor = (event: ChangeEvent<HTMLInputElement>) => {
-    console.log(event.target.value)
     setCurrentColor(event.target.value)
+  }
+
+  const handleChangeDrawingTool = (selectedTool: DrawingTool) => {
+    setCurrentTool(selectedTool)
   }
 
   return (
     <div className="bg-background flex justify-center w-screen h-screen">
       <div className="flex flex-col justify-center gap-4 items-center">
         <Controls>
-          <DrawingTools />
+          <DrawingTools 
+            currentTool={currentTool} 
+            handleChange={handleChangeDrawingTool}
+          />
           <ColorPicker handleChange={handleChangeColor} />
           <EditGridModal 
             gridHeight={gridHeight} 
@@ -42,7 +50,7 @@ function App() {
         <PixelGrid 
           height={gridHeight} 
           width={gridWidth} 
-          currentColor={currentColor} 
+          currentColor={currentColor}
         />
       </div>
     </div>
