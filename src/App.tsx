@@ -51,6 +51,8 @@ function App() {
           height={gridHeight} 
           width={gridWidth} 
           currentColor={currentColor}
+          backgroundColor={backgroundColor}
+          currentTool={currentTool}
         />
       </div>
     </div>

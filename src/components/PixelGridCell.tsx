@@ -1,15 +1,22 @@
-import { useState, type MouseEvent } from "react"
+import { useState } from "react"
+import type { DrawingTool } from "@/components/DrawingTools"
 
 type PixelGridCellProps = {
     currentColor: string
+    backgroundColor: string
+    currentTool: DrawingTool
 }
 
-export const PixelGridCell = ({ currentColor }: PixelGridCellProps) => {
+export const PixelGridCell = ({ currentColor, backgroundColor, currentTool }: PixelGridCellProps) => {
 
-    const [cellColor, setCellColor] = useState<string>('#FFFFFF')
+    const [cellColor, setCellColor] = useState<string>(backgroundColor)
 
-    const handleClickCell = (event: MouseEvent<HTMLDivElement>) => {
-        setCellColor(currentColor)
+    const handleClickCell = () => {
+        if (currentTool === 'PENCIL') {
+            setCellColor(currentColor)
+        } else if (currentTool === 'ERASER') {
+            setCellColor(backgroundColor)
+        }
     }
 
     return (
