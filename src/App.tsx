@@ -1,15 +1,15 @@
 import './App.css'
+import { ColorPicker } from '@/components/ColorPicker'
+import { EditGridModal } from '@/components/EditGridModal'
 import { PixelGrid } from '@/components/PixelGrid'
-import { Button } from '@/components/ui/button'
-import { Dialog, DialogClose, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
-import { useState, type FormEvent } from 'react'
-import { Label } from '@/components/ui/label'
-import { Input } from '@/components/ui/input'
+import { useState, type ChangeEvent, type FormEvent } from 'react'
+import { Controls } from './components/Controls'
 
 function App() {
 
   const [gridWidth, setGridWidth] = useState<number>(10)
   const [gridHeight, setGridHeight] = useState<number>(10)
+  const [currentColor, setCurrentColor] = useState<string>("#000000")
 
   const handleSubmitEditGrid = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -20,38 +20,27 @@ function App() {
     setGridWidth(newWidth)
   }
 
+  const handleChangeColor = (event: ChangeEvent<HTMLInputElement>) => {
+    console.log(event.target.value)
+    setCurrentColor(event.target.value)
+  }
+
   return (
     <div className="bg-background flex justify-center w-screen h-screen">
-      <div className="flex items-center">
-        <Dialog>
-          <DialogTrigger asChild>
-            <Button>Edit</Button>
-          </DialogTrigger>
-          <DialogContent>
-            <form className="grid gap-4" onSubmit={handleSubmitEditGrid}>
-              <DialogHeader>
-                <DialogTitle>Edit Grid</DialogTitle>
-              </DialogHeader>
-              <div className="grid gap-4">
-                <div className="grid gap-3">
-                  <Label htmlFor="grid-height">Height</Label>
-                  <Input id="grid-height" name="height" defaultValue={gridHeight} type="number" min={1} required/>
-                </div>
-                <div className="grid gap-3">
-                  <Label htmlFor="grid-width">Width</Label>
-                  <Input id="grid-width" name="width" defaultValue={gridWidth} type="number" min={1} required/>
-                </div>
-              </div>
-              <DialogFooter>
-                <DialogClose asChild>
-                  <Button variant="outline">Cancel</Button>
-                </DialogClose>
-                <Button type="submit">Save changes</Button>
-              </DialogFooter>
-            </form>
-          </DialogContent>
-        </Dialog>
-        <PixelGrid height={gridHeight} width={gridWidth} />
+      <div className="flex flex-col justify-center gap-4 items-center">
+        <Controls>
+          <ColorPicker handleChange={handleChangeColor} />
+          <EditGridModal 
+            gridHeight={gridHeight} 
+            gridWidth={gridWidth} 
+            handleSubmit={handleSubmitEditGrid}
+          />
+        </Controls>
+        <PixelGrid 
+          height={gridHeight} 
+          width={gridWidth} 
+          currentColor={currentColor} 
+        />
       </div>
     </div>
   )
