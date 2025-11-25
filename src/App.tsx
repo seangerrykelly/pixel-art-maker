@@ -1,9 +1,11 @@
 import './App.css'
+import { useState, type ChangeEvent, type FormEvent } from 'react'
+
 import { ColorPicker } from '@/components/ColorPicker'
+import { Controls } from '@/components/Controls'
+import { DrawingTools } from '@/components/DrawingTools'
 import { EditGridModal } from '@/components/EditGridModal'
 import { PixelGrid } from '@/components/PixelGrid'
-import { useState, type ChangeEvent, type FormEvent } from 'react'
-import { Controls } from './components/Controls'
 
 function App() {
 
@@ -29,6 +31,7 @@ function App() {
     <div className="bg-background flex justify-center w-screen h-screen">
       <div className="flex flex-col justify-center gap-4 items-center">
         <Controls>
+          <DrawingTools />
           <ColorPicker handleChange={handleChangeColor} />
           <EditGridModal 
             gridHeight={gridHeight} 
