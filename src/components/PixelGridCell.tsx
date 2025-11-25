@@ -5,9 +5,10 @@ type PixelGridCellProps = {
     currentColor: string
     backgroundColor: string
     currentTool: DrawingTool
+    isMouseDown: boolean
 }
 
-export const PixelGridCell = ({ currentColor, backgroundColor, currentTool }: PixelGridCellProps) => {
+export const PixelGridCell = ({ currentColor, backgroundColor, currentTool, isMouseDown }: PixelGridCellProps) => {
 
     const [cellColor, setCellColor] = useState<string>(backgroundColor)
     const [isFilled, setIsFilled] = useState<boolean>(false)
@@ -18,7 +19,12 @@ export const PixelGridCell = ({ currentColor, backgroundColor, currentTool }: Pi
         }
     }, [backgroundColor])
 
-    const handleClickCell = () => {
+    const drawOnCell = () => {
+        if (!isMouseDown) {
+            // Don't do anything if user isn't clicking mouse
+            return
+        }
+
         if (currentTool === 'PENCIL') {
             setCellColor(currentColor)
             setIsFilled(true)
@@ -34,7 +40,8 @@ export const PixelGridCell = ({ currentColor, backgroundColor, currentTool }: Pi
             style={{
                 background: cellColor
             }}
-            onClick={handleClickCell}
+            onMouseDown={drawOnCell}
+            onMouseEnter={drawOnCell}
         >
                     
         </div>
