@@ -1,15 +1,38 @@
-import { useState, type MouseEvent } from "react"
+import { useEffect, useState } from "react"
+import type { DrawingTool } from "@/components/DrawingTools"
 
 type PixelGridCellProps = {
     currentColor: string
+    backgroundColor: string
+    currentTool: DrawingTool
+    isMouseDown: boolean
 }
 
-export const PixelGridCell = ({ currentColor }: PixelGridCellProps) => {
+export const PixelGridCell = ({ currentColor, backgroundColor, currentTool, isMouseDown }: PixelGridCellProps) => {
 
-    const [cellColor, setCellColor] = useState<string>('#FFFFFF')
+    const [cellColor, setCellColor] = useState<string>(backgroundColor)
+    const [isFilled, setIsFilled] = useState<boolean>(false)
 
-    const handleClickCell = (event: MouseEvent<HTMLDivElement>) => {
-        setCellColor(currentColor)
+    useEffect(() => {
+        if (!isFilled) {
+            setCellColor(backgroundColor)
+        }
+    }, [backgroundColor])
+
+    // isInitialClick parameter needed because isMouseDown won't be updated fast enough on first click
+    const drawOnCell = (isInitialClick: boolean) => {
+        if (!isInitialClick && !isMouseDown) {
+            // Don't do anything if user isn't clicking mouse
+            return
+        }
+
+        if (currentTool === 'PENCIL') {
+            setCellColor(currentColor)
+            setIsFilled(true)
+        } else if (currentTool === 'ERASER') {
+            setCellColor(backgroundColor)
+            setIsFilled(false)
+        }
     }
 
     return (
@@ -18,7 +41,8 @@ export const PixelGridCell = ({ currentColor }: PixelGridCellProps) => {
             style={{
                 background: cellColor
             }}
-            onClick={handleClickCell}
+            onMouseDown={() => drawOnCell(true)}
+            onMouseEnter={() => drawOnCell(false)}
         >
                     
         </div>

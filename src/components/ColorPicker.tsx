@@ -2,20 +2,24 @@ import type { ChangeEvent } from 'react'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 
+export type ColorType = 'Pencil' | 'Background'
+
 type ColorPickerProps = {
-    handleChange: (event: ChangeEvent<HTMLInputElement>) => void
+    handleChange: (event: ChangeEvent<HTMLInputElement>, colorType: ColorType) => void
+    colorType: ColorType
 }
 
-export const ColorPicker = ({ handleChange }: ColorPickerProps) => {
+export const ColorPicker = ({ handleChange, colorType }: ColorPickerProps) => {
     return (
         <div className="flex gap-2">
-            <Label htmlFor='color-picker'>Color</Label>
+            <Label htmlFor='color-picker'>{colorType} Color</Label>
             <Input
                 className="w-10 p-1"
                 type="color" 
                 name='color-picker' 
                 id='color-picker' 
-                onChange={handleChange} 
+                onChange={(e) => handleChange(e, colorType)}
+                defaultValue={`${colorType === 'Background' ? '#FFFFFF' : '#000000'}`}
             />
         </div>
     )

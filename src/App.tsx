@@ -1,15 +1,19 @@
 import './App.css'
-import { ColorPicker } from '@/components/ColorPicker'
+import { useState, type ChangeEvent, type FormEvent } from 'react'
+
+import { ColorPicker, type ColorType } from '@/components/ColorPicker'
+import { Controls } from '@/components/Controls'
+import { DrawingTools, type DrawingTool } from '@/components/DrawingTools'
 import { EditGridModal } from '@/components/EditGridModal'
 import { PixelGrid } from '@/components/PixelGrid'
-import { useState, type ChangeEvent, type FormEvent } from 'react'
-import { Controls } from './components/Controls'
 
 function App() {
 
   const [gridWidth, setGridWidth] = useState<number>(10)
   const [gridHeight, setGridHeight] = useState<number>(10)
   const [currentColor, setCurrentColor] = useState<string>("#000000")
+  const [backgroundColor, setBackgroundColor] = useState<string>("#FFFFFF")
+  const [currentTool, setCurrentTool] = useState<DrawingTool>('PENCIL')
 
   const handleSubmitEditGrid = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -20,16 +24,29 @@ function App() {
     setGridWidth(newWidth)
   }
 
-  const handleChangeColor = (event: ChangeEvent<HTMLInputElement>) => {
-    console.log(event.target.value)
-    setCurrentColor(event.target.value)
+  const handleChangeColor = (event: ChangeEvent<HTMLInputElement>, colorType: ColorType) => {
+    const selectedColor = event.target.value
+    if (colorType === 'Pencil') {
+      setCurrentColor(selectedColor)
+    } else if (colorType === 'Background') {
+      setBackgroundColor(selectedColor)
+    }
+  }
+
+  const handleChangeDrawingTool = (selectedTool: DrawingTool) => {
+    setCurrentTool(selectedTool)
   }
 
   return (
     <div className="bg-background flex justify-center w-screen h-screen">
       <div className="flex flex-col justify-center gap-4 items-center">
         <Controls>
-          <ColorPicker handleChange={handleChangeColor} />
+          <DrawingTools 
+            currentTool={currentTool} 
+            handleChange={handleChangeDrawingTool}
+          />
+          <ColorPicker handleChange={handleChangeColor} colorType="Pencil" />
+          <ColorPicker handleChange={handleChangeColor} colorType="Background" />
           <EditGridModal 
             gridHeight={gridHeight} 
             gridWidth={gridWidth} 
@@ -39,7 +56,9 @@ function App() {
         <PixelGrid 
           height={gridHeight} 
           width={gridWidth} 
-          currentColor={currentColor} 
+          currentColor={currentColor}
+          backgroundColor={backgroundColor}
+          currentTool={currentTool}
         />
       </div>
     </div>
