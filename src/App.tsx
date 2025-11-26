@@ -5,6 +5,7 @@ import { ColorPicker, type ColorType } from '@/components/ColorPicker'
 import { Controls } from '@/components/Controls'
 import { DrawingTools, type DrawingTool } from '@/components/DrawingTools'
 import { EditGridModal } from '@/components/EditGridModal'
+import { Header } from '@/components/Header'
 import { PixelGrid } from '@/components/PixelGrid'
 
 function App() {
@@ -38,8 +39,9 @@ function App() {
   }
 
   return (
-    <div className="bg-background flex justify-center w-screen h-screen">
-      <div className="flex flex-col justify-center gap-4 items-center">
+    <>
+      <Header />
+      <div className="flex flex-row justify-center gap-4 items-center">
         <Controls>
           <DrawingTools 
             currentTool={currentTool} 
@@ -61,7 +63,7 @@ function App() {
           currentTool={currentTool}
         />
       </div>
-    </div>
+    </>
   )
 }
 

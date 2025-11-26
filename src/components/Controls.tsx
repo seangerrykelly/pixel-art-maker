@@ -6,7 +6,7 @@ type ControlsProps = {
 
 export const Controls = ({ children }: ControlsProps) => {
     return (
-        <div className="flex flex-col gap-2 w-full">
+        <div className="flex flex-col gap-2 w-full shadow-xl p-4 rounded justify-self-start">
             {children}
         </div>
     )
