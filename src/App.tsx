@@ -7,6 +7,7 @@ import { DrawingTools, type DrawingTool } from '@/components/DrawingTools'
 import { EditGridModal } from '@/components/EditGridModal'
 import { Header } from '@/components/Header'
 import { PixelGrid } from '@/components/PixelGrid'
+import { ThemeProvider } from '@/components/ThemeProvider'
 
 function App() {
 
@@ -39,31 +40,33 @@ function App() {
   }
 
   return (
-    <div className="flex flex-col h-screen w-screen">
-      <Header />
-      <div className="flex-1 flex flex-row justify-start gap-4 items-center">
-        <Controls>
-          <DrawingTools 
-            currentTool={currentTool} 
-            handleChange={handleChangeDrawingTool}
+    <ThemeProvider defaultTheme='dark'>
+      <div className="flex flex-col h-screen w-screen">
+        <Header />
+        <div className="flex-1 flex flex-row justify-start gap-4 items-center">
+          <Controls>
+            <DrawingTools 
+              currentTool={currentTool} 
+              handleChange={handleChangeDrawingTool}
+            />
+            <ColorPicker handleChange={handleChangeColor} colorType="Pencil" />
+            <ColorPicker handleChange={handleChangeColor} colorType="Background" />
+            <EditGridModal 
+              gridHeight={gridHeight} 
+              gridWidth={gridWidth} 
+              handleSubmit={handleSubmitEditGrid}
+            />
+          </Controls>
+          <PixelGrid 
+            height={gridHeight} 
+            width={gridWidth} 
+            currentColor={currentColor}
+            backgroundColor={backgroundColor}
+            currentTool={currentTool}
           />
-          <ColorPicker handleChange={handleChangeColor} colorType="Pencil" />
-          <ColorPicker handleChange={handleChangeColor} colorType="Background" />
-          <EditGridModal 
-            gridHeight={gridHeight} 
-            gridWidth={gridWidth} 
-            handleSubmit={handleSubmitEditGrid}
-          />
-        </Controls>
-        <PixelGrid 
-          height={gridHeight} 
-          width={gridWidth} 
-          currentColor={currentColor}
-          backgroundColor={backgroundColor}
-          currentTool={currentTool}
-        />
+        </div>
       </div>
-    </div>
+    </ThemeProvider>
   )
 }
 
