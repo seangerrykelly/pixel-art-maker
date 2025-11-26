@@ -57,13 +57,15 @@ function App() {
               handleSubmit={handleSubmitEditGrid}
             />
           </Controls>
-          <PixelGrid 
-            height={gridHeight} 
-            width={gridWidth} 
-            currentColor={currentColor}
-            backgroundColor={backgroundColor}
-            currentTool={currentTool}
-          />
+          <div className='flex-1 flex h-full justify-center overflow-hidden'>
+            <PixelGrid 
+              height={gridHeight} 
+              width={gridWidth} 
+              currentColor={currentColor}
+              backgroundColor={backgroundColor}
+              currentTool={currentTool}
+            />
+          </div>
         </div>
       </div>
     </ThemeProvider>
