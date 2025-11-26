@@ -39,9 +39,9 @@ function App() {
   }
 
   return (
-    <>
+    <div className="flex flex-col h-screen w-screen">
       <Header />
-      <div className="flex flex-row justify-center gap-4 items-center">
+      <div className="flex-1 flex flex-row justify-start gap-4 items-center">
         <Controls>
           <DrawingTools 
             currentTool={currentTool} 
@@ -63,7 +63,7 @@ function App() {
           currentTool={currentTool}
         />
       </div>
-    </>
+    </div>
   )
 }
 
