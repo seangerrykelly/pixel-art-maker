@@ -1,4 +1,3 @@
-import './App.css'
 import { useState, type ChangeEvent, type FormEvent } from 'react'
 
 import { ColorPicker, type ColorType } from '@/components/ColorPicker'
