@@ -11,8 +11,7 @@ type PixelGridProps = {
 }
 
 export const PixelGrid = ({ height, width, currentColor, backgroundColor, currentTool}: PixelGridProps) => {
-    const cellCount = height * width
-    const cells = Array.from({ length: cellCount }, (_, index) => index + 1)
+    const cells = Array.from({ length: height }, (_) => Array.from({ length: width }, (_, index) => index + 1))
 
     const [isMouseDown, setIsMouseDown] = useState<boolean>(false)
 
@@ -59,14 +58,17 @@ export const PixelGrid = ({ height, width, currentColor, backgroundColor, curren
                 onMouseDown={() => setIsMouseDown(true)}
                 onMouseUp={() => setIsMouseDown(false)}
             >
-                {cells.map((_) => (
-                    <PixelGridCell 
-                        currentColor={currentColor}
-                        backgroundColor={backgroundColor}
-                        currentTool={currentTool}
-                        isMouseDown={isMouseDown}
-                    />
-                ))}
+                {cells.flatMap((row, rowIndex) => 
+                    row.map((_, colIndex) => (
+                        <PixelGridCell 
+                            key={`grid-cell-${rowIndex}-${colIndex}`}
+                            currentColor={currentColor}
+                            backgroundColor={backgroundColor}
+                            currentTool={currentTool}
+                            isMouseDown={isMouseDown}
+                        />
+                    ))
+                )}
             </div>
         </div>
     )
