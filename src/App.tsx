@@ -43,7 +43,7 @@ function App() {
     <ThemeProvider defaultTheme='dark'>
       <div className="flex flex-col h-screen w-screen">
         <Header />
-        <div className="flex-1 flex flex-row justify-start gap-4 items-center">
+        <div className="flex-1 flex sm:flex-row flex-col-reverse justify-start items-center">
           <Controls>
             <DrawingTools 
               currentTool={currentTool} 
@@ -57,7 +57,7 @@ function App() {
               handleSubmit={handleSubmitEditGrid}
             />
           </Controls>
-          <div className='flex-1 flex h-full justify-center overflow-hidden'>
+          <div className='flex-1 flex h-full w-full justify-center overflow-hidden'>
             <PixelGrid 
               height={gridHeight} 
               width={gridWidth} 

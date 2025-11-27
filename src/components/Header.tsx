@@ -13,7 +13,7 @@ export const Header = () => {
     }
 
     return (
-        <div className="p-1 shadow-md w-full flex items-center justify-center">
+        <div className="p-1 shadow-md w-full flex items-center justify-center border-1">
             Pixel Art Maker
             <Button onClick={toggleTheme}>Toggle theme</Button>
         </div>
