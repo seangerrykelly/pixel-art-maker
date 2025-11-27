@@ -1,11 +1,12 @@
-import './App.css'
 import { useState, type ChangeEvent, type FormEvent } from 'react'
 
 import { ColorPicker, type ColorType } from '@/components/ColorPicker'
 import { Controls } from '@/components/Controls'
 import { DrawingTools, type DrawingTool } from '@/components/DrawingTools'
 import { EditGridModal } from '@/components/EditGridModal'
+import { Header } from '@/components/Header'
 import { PixelGrid } from '@/components/PixelGrid'
+import { ThemeProvider } from '@/components/ThemeProvider'
 
 function App() {
 
@@ -38,30 +39,35 @@ function App() {
   }
 
   return (
-    <div className="bg-background flex justify-center w-screen h-screen">
-      <div className="flex flex-col justify-center gap-4 items-center">
-        <Controls>
-          <DrawingTools 
-            currentTool={currentTool} 
-            handleChange={handleChangeDrawingTool}
-          />
-          <ColorPicker handleChange={handleChangeColor} colorType="Pencil" />
-          <ColorPicker handleChange={handleChangeColor} colorType="Background" />
-          <EditGridModal 
-            gridHeight={gridHeight} 
-            gridWidth={gridWidth} 
-            handleSubmit={handleSubmitEditGrid}
-          />
-        </Controls>
-        <PixelGrid 
-          height={gridHeight} 
-          width={gridWidth} 
-          currentColor={currentColor}
-          backgroundColor={backgroundColor}
-          currentTool={currentTool}
-        />
+    <ThemeProvider defaultTheme='dark'>
+      <div className="flex flex-col h-screen w-screen">
+        <Header />
+        <div className="flex-1 flex sm:flex-row flex-col-reverse justify-start items-center">
+          <Controls>
+            <DrawingTools 
+              currentTool={currentTool} 
+              handleChange={handleChangeDrawingTool}
+            />
+            <ColorPicker handleChange={handleChangeColor} colorType="Pencil" />
+            <ColorPicker handleChange={handleChangeColor} colorType="Background" />
+            <EditGridModal 
+              gridHeight={gridHeight} 
+              gridWidth={gridWidth} 
+              handleSubmit={handleSubmitEditGrid}
+            />
+          </Controls>
+          <div className='flex-1 flex h-full w-full justify-center overflow-hidden'>
+            <PixelGrid 
+              height={gridHeight} 
+              width={gridWidth} 
+              currentColor={currentColor}
+              backgroundColor={backgroundColor}
+              currentTool={currentTool}
+            />
+          </div>
+        </div>
       </div>
-    </div>
+    </ThemeProvider>
   )
 }
 
