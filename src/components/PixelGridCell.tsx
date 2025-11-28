@@ -37,7 +37,7 @@ export const PixelGridCell = ({ currentColor, backgroundColor, currentTool, isMo
 
     return (
         <div 
-            className="border border-foreground box-content"
+            className="border border-foreground dark:border-background box-content"
             style={{
                 background: cellColor
             }}

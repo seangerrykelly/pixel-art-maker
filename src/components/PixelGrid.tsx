@@ -46,14 +46,14 @@ export const PixelGrid = ({ height, width, currentColor, backgroundColor, curren
 
     return(
         <div 
-            className="flex h-full flex-1 items-center justify-center"
+            className="pixelGridContainer flex h-full flex-1 items-center justify-center"
             ref={pixelGridContainerRef}
         >
             <div 
                 className="grid gap-0"
                 style={{
-                    gridTemplateColumns: `repeat(${width}, 1rem)`,
-                    gridTemplateRows: `repeat(${height}, 1rem)`,
+                    gridTemplateColumns: `repeat(${width}, 0.5rem)`,
+                    gridTemplateRows: `repeat(${height}, 0.5rem)`,
                 }}
                 onMouseDown={() => setIsMouseDown(true)}
                 onMouseUp={() => setIsMouseDown(false)}

@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button"
 import { useTheme } from "@/components/ThemeProvider"
+import { ExportImage } from "./ExportImage"
 
 export const Header = () => {
     const { setTheme, theme } = useTheme()
@@ -13,9 +14,12 @@ export const Header = () => {
     }
 
     return (
-        <div className="p-1 shadow-md w-full flex items-center justify-center border">
-            Pixel Art Maker
-            <Button onClick={toggleTheme}>Toggle theme</Button>
+        <div className="p-1 shadow-md w-full flex items-center justify-between border">
+            <h1>Pixel Art Maker</h1>
+            <div className="flex gap-2">
+                <Button onClick={toggleTheme}>Toggle theme</Button>
+                <ExportImage />
+            </div>
         </div>
     )
 }
