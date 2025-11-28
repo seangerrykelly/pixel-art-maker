@@ -52,8 +52,8 @@ export const PixelGrid = ({ height, width, currentColor, backgroundColor, curren
             <div 
                 className="grid gap-0"
                 style={{
-                    gridTemplateColumns: `repeat(${width}, 1rem)`,
-                    gridTemplateRows: `repeat(${height}, 1rem)`,
+                    gridTemplateColumns: `repeat(${width}, 0.5rem)`,
+                    gridTemplateRows: `repeat(${height}, 0.5rem)`,
                 }}
                 onMouseDown={() => setIsMouseDown(true)}
                 onMouseUp={() => setIsMouseDown(false)}
