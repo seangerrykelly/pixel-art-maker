@@ -10,8 +10,8 @@ import { ThemeProvider } from '@/components/ThemeProvider'
 
 function App() {
 
-  const [gridWidth, setGridWidth] = useState<number>(50)
-  const [gridHeight, setGridHeight] = useState<number>(50)
+  const [gridWidth, setGridWidth] = useState<number>(20)
+  const [gridHeight, setGridHeight] = useState<number>(20)
   const [currentColor, setCurrentColor] = useState<string>("#000000")
   const [backgroundColor, setBackgroundColor] = useState<string>("#FFFFFF")
   const [currentTool, setCurrentTool] = useState<DrawingTool>('PENCIL')
