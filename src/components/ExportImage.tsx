@@ -1,11 +1,8 @@
 import { Button } from "@/components/ui/button"
+import { exportImage } from "@/utils/exportImage"
 
-type ExportImageProps = {
-    handleExportImage: () => void
-}
-
-export const ExportImage = ({ handleExportImage }: ExportImageProps) => {
+export const ExportImage = () => {
     return (
-        <Button onClick={handleExportImage}>Export</Button>
+        <Button onClick={exportImage}>Export</Button>
     )
 }
