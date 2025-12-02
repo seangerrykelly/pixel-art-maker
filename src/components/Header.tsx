@@ -17,7 +17,7 @@ export const Header = () => {
         <div className="p-1 shadow-md w-full flex items-center justify-between border">
             <h1 className="text-xl">BitBuilder</h1>
             <div className="flex gap-2">
-                <Button onClick={toggleTheme}>Toggle theme</Button>
+                {/* <Button onClick={toggleTheme}>Toggle theme</Button> */}
                 <ExportImage />
             </div>
         </div>
