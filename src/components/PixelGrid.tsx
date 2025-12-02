@@ -20,6 +20,11 @@ export const PixelGrid = ({ height, width, currentColor, backgroundColor, border
     const pixelGridContainerRef = useRef<HTMLDivElement>(null)
     const zoomScaleRef = useRef(1)
 
+    // Refs for zooming on mobile
+    const pointerCache = useRef<PointerEvent[]>([])
+    const prevDistance = useRef<number | null>(null)
+
+    // Handle zooming in and out on desktop (scrolling on mouse or trackpad)
     useEffect(() => {
         const handleMouseUp = () => setIsMouseDown(false)
 
@@ -43,6 +48,79 @@ export const PixelGrid = ({ height, width, currentColor, backgroundColor, border
         return () => {
             window.removeEventListener('mouseup', handleMouseUp)
             window.removeEventListener('wheel', handleZoom)
+        }
+    }, [])
+
+    // Handle zooming in and out on mobile (pinch to zoom)
+    useEffect(() => {
+        const pixelGridElement = pixelGridContainerRef.current
+        if (!pixelGridElement) {
+                return
+        }
+
+        const handlePointerDown = (event: PointerEvent) => {
+            pointerCache.current.push(event)
+        }
+
+        const handlePointerMove = (event: PointerEvent) => {
+            if (!pixelGridElement) {
+                return
+            }
+            for (let i = 0; i < pointerCache.current.length; i++) {
+                if (pointerCache.current[i].pointerId === event.pointerId) {
+                    pointerCache.current[i] = event
+                    break
+                }
+            }
+
+            // This is where we will zoom in or out
+            if (pointerCache.current.length === 2) {
+                event.preventDefault()
+
+                const [pointer1, pointer2] = pointerCache.current
+                const currDistance = Math.hypot(pointer1.clientX - pointer2.clientX, pointer1.clientY - pointer2.clientY)
+
+                if (prevDistance.current !== null) {
+                    const distanceDifference = currDistance - prevDistance.current
+                    const zoomFactor = distanceDifference * 0.002
+
+                    zoomScaleRef.current = Math.min(
+                        Math.max(zoomScaleRef.current + zoomFactor, 0.3),
+                        4
+                    )
+
+                    pixelGridElement.style.transform = `scale(${zoomScaleRef.current})`
+                    pixelGridElement.style.transformOrigin = 'center center'
+                }
+
+                prevDistance.current = currDistance
+            }
+        }
+
+        const handlePointerUp = (event: PointerEvent) => {
+            pointerCache.current = pointerCache.current.filter(
+                (p) => p.pointerId !== event.pointerId
+            )
+
+            if (pointerCache.current.length < 2) {
+                prevDistance.current = null
+            }
+        }
+
+        pixelGridElement.addEventListener('pointerdown', handlePointerDown, { passive: false })
+        pixelGridElement.addEventListener('pointermove', handlePointerMove, { passive: false })
+        pixelGridElement.addEventListener('pointerup', handlePointerUp)
+        pixelGridElement.addEventListener('pointercancel', handlePointerUp)
+        pixelGridElement.addEventListener('pointerout', handlePointerUp)
+        pixelGridElement.addEventListener('pointerleave', handlePointerUp)
+
+        return () => {
+            pixelGridElement.addEventListener('pointerdown', handlePointerDown)
+            pixelGridElement.addEventListener('pointermove', handlePointerMove)
+            pixelGridElement.addEventListener('pointerup', handlePointerUp)
+            pixelGridElement.addEventListener('pointercancel', handlePointerUp)
+            pixelGridElement.addEventListener('pointerout', handlePointerUp)
+            pixelGridElement.addEventListener('pointerleave', handlePointerUp)
         }
     }, [])
 
