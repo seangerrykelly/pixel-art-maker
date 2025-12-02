@@ -39,10 +39,10 @@ export const PixelGridCell = ({ currentColor, backgroundColor, borderColor, curr
 
     return (
         <div 
-            className="border box-content"
+            className="border box-border"
             style={{
                 background: cellColor,
-                borderColor: showGridLines ? borderColor : 'transparent'
+                borderColor: showGridLines ? borderColor : cellColor
             }}
             onMouseDown={() => drawOnCell(true)}
             onMouseEnter={() => drawOnCell(false)}
