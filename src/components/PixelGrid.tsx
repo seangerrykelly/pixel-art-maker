@@ -7,10 +7,12 @@ type PixelGridProps = {
     width: number
     currentColor: string
     backgroundColor: string
+    borderColor: string
     currentTool: DrawingTool
+    showGridLines: boolean
 }
 
-export const PixelGrid = ({ height, width, currentColor, backgroundColor, currentTool}: PixelGridProps) => {
+export const PixelGrid = ({ height, width, currentColor, backgroundColor, borderColor, currentTool, showGridLines }: PixelGridProps) => {
     const cells = Array.from({ length: height }, (_) => Array.from({ length: width }, (_, index) => index + 1))
 
     const [isMouseDown, setIsMouseDown] = useState<boolean>(false)
@@ -64,8 +66,10 @@ export const PixelGrid = ({ height, width, currentColor, backgroundColor, curren
                             key={`grid-cell-${rowIndex}-${colIndex}`}
                             currentColor={currentColor}
                             backgroundColor={backgroundColor}
+                            borderColor={borderColor}
                             currentTool={currentTool}
                             isMouseDown={isMouseDown}
+                            showGridLines={showGridLines}
                         />
                     ))
                 )}

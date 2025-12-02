@@ -4,11 +4,13 @@ import type { DrawingTool } from "@/components/DrawingTools"
 type PixelGridCellProps = {
     currentColor: string
     backgroundColor: string
+    borderColor: string
     currentTool: DrawingTool
     isMouseDown: boolean
+    showGridLines: boolean
 }
 
-export const PixelGridCell = ({ currentColor, backgroundColor, currentTool, isMouseDown }: PixelGridCellProps) => {
+export const PixelGridCell = ({ currentColor, backgroundColor, borderColor, currentTool, isMouseDown, showGridLines }: PixelGridCellProps) => {
 
     const [cellColor, setCellColor] = useState<string>(backgroundColor)
     const [isFilled, setIsFilled] = useState<boolean>(false)
@@ -37,9 +39,10 @@ export const PixelGridCell = ({ currentColor, backgroundColor, currentTool, isMo
 
     return (
         <div 
-            className="border border-foreground dark:border-background box-content"
+            className="border box-content"
             style={{
-                background: cellColor
+                background: cellColor,
+                borderColor: showGridLines ? borderColor : 'transparent'
             }}
             onMouseDown={() => drawOnCell(true)}
             onMouseEnter={() => drawOnCell(false)}
