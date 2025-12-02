@@ -115,18 +115,18 @@ export const PixelGrid = ({ height, width, currentColor, backgroundColor, border
         pixelGridElement.addEventListener('pointerleave', handlePointerUp)
 
         return () => {
-            pixelGridElement.addEventListener('pointerdown', handlePointerDown)
-            pixelGridElement.addEventListener('pointermove', handlePointerMove)
-            pixelGridElement.addEventListener('pointerup', handlePointerUp)
-            pixelGridElement.addEventListener('pointercancel', handlePointerUp)
-            pixelGridElement.addEventListener('pointerout', handlePointerUp)
-            pixelGridElement.addEventListener('pointerleave', handlePointerUp)
+            pixelGridElement.removeEventListener('pointerdown', handlePointerDown)
+            pixelGridElement.removeEventListener('pointermove', handlePointerMove)
+            pixelGridElement.removeEventListener('pointerup', handlePointerUp)
+            pixelGridElement.removeEventListener('pointercancel', handlePointerUp)
+            pixelGridElement.removeEventListener('pointerout', handlePointerUp)
+            pixelGridElement.removeEventListener('pointerleave', handlePointerUp)
         }
     }, [])
 
     return(
         <div 
-            className="pixelGridContainer flex h-full flex-1 items-center justify-center"
+            className="pixelGridContainer flex h-full flex-1 items-center justify-center touch-none"
             ref={pixelGridContainerRef}
         >
             <div 
