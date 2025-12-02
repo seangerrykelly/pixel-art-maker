@@ -39,7 +39,7 @@ export const PixelGrid = ({ height, width, currentColor, backgroundColor, border
         }
 
         window.addEventListener('mouseup', handleMouseUp)
-        window.addEventListener('wheel', handleZoom)
+        window.addEventListener('wheel', handleZoom, { passive: false })
         return () => {
             window.removeEventListener('mouseup', handleMouseUp)
             window.removeEventListener('wheel', handleZoom)

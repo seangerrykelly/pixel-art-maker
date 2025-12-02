@@ -14,7 +14,7 @@ export const EditGridModal = ({ gridHeight, gridWidth, handleSubmit }: EditGridM
     return (
         <Dialog>
             <DialogTrigger asChild>
-            <Button size="sm">Edit</Button>
+            <Button size="sm">Edit Grid Dimensions</Button>
             </DialogTrigger>
             <DialogContent>
             <form className="grid gap-4" onSubmit={handleSubmit}>
